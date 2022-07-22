@@ -1,0 +1,14 @@
+{
+    "name": "Extensão SEI++",
+    "description": "adiciona funcionalidades para aviso e controle de prazos",
+    "version": "1.0",
+    "manifest_version": 3,
+    "background": {
+        "service_worker": "background.js"
+    },
+    "permissions": ["scripting", "tabs"],
+    "host_permissions": ["https://sei.df.gov.br/*"],
+    "action": {
+        "default_popup": "popup.html"
+    }
+}
