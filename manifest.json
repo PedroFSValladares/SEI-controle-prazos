@@ -6,8 +6,15 @@
     "background": {
         "service_worker": "background.js"
     },
-    "permissions": ["scripting", "tabs"],
+    "permissions": ["scripting", "tabs", "notifications"],
     "host_permissions": ["https://sei.df.gov.br/*"],
+    "content_scripts":[
+        {
+            "matches": ["*://*.br/sei/*", "*://*.br/sip/*"],
+            "css":["popup.css"],
+            "js": ["warning.js"]
+        }
+    ],
     "action": {
         "default_popup": "popup.html"
     }
