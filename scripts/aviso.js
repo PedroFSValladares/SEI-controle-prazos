@@ -88,15 +88,11 @@ function showPopup(processos){
 const table = document.createElement("table")
 setTimeout(() => {
     const tableGerados = document.querySelectorAll("#tblProcessosGerados");
-    const tela = document.getElementById("divInfraAreaTelaD");
     const PROCESSO_GERADOS = getProcessos("Gerados");
     const PROCESSOS_RECEBIDOS = getProcessos("Recebidos");
     const SERVIDOR_LOGADO = getServidor();
-    tableGerados[0].classList.forEach((element) => {
-        table.classList.add(element);
-    })
-    table.classList.add("table");
-    tela.appendChild(table);
+    
+    creteTable(tableGerados);
     
     verificaPrazos(PROCESSO_GERADOS, SERVIDOR_LOGADO);
     verificaPrazos(PROCESSOS_RECEBIDOS, SERVIDOR_LOGADO);
@@ -123,8 +119,42 @@ function verificaPrazos(processos, servidor){
         }
     });
     if(pr.length != 0){
-       sendMessage({"processos": pr});    
+        sendMessage({"processos": pr});    
     }
+}
+
+function creteTable(tableGerados){
+    const form = document.getElementById("frmProcedimentoControlar");
+    
+    const headRow = document.querySelector("#tblProcessosGerados thead").cloneNode(true);
+    console.log(headRow.childNodes[0].childNodes[3])
+    /*
+    const head = document.createElement("thead");
+    const body = document.createElement("tbody");
+    const tableTitle = document.createElement("th");
+    const tableDate = document.createElement("th");
+    
+    tableTitle.textContent = "Sujeito a prazo";
+    headRow.appendChild(tableTitle);
+    headRow.appendChild(tableDate);
+    table.appendChild(headRow);
+    
+    */
+   const container = document.createElement("div");
+   const divTabela = document.createElement("div");
+   divTabela.classList.add("divPrazosAreaTabela");
+   tableGerados[0].classList.forEach((element) => {
+       table.classList.add(element);
+   })
+   container.classList.add("divPrazos")
+   table.appendChild(headRow);
+   table.classList.add("table");
+   divTabela.classList.add("infraAreaTabela");
+   divTabela.appendChild(table);
+   container.appendChild(divTabela);
+   form.insertBefore(container, form.childNodes[8]);
+   divTabela.setAttribute("id", "teste");
+   console.log(form.childNodes);
 }
 
 function sendMessage(message){

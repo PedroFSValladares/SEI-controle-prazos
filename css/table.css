@@ -1,3 +1,14 @@
+.tabelaPrazos{
+    width: 50%;
+    height: 500px;
+}
+
+.divPrazos{
+    float: right;
+    width: 48% !important;
+    margin-top: 100px;
+}
+
 .table{
-    left: 900px;
+    width: 92%;
 }
