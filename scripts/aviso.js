@@ -89,12 +89,15 @@ function teste(){
     console.log("a")
 }
 setTimeout(() => {
+
     const TABLE_GERADOS = document.querySelectorAll("#tblProcessosGerados");
     const PROCESSO_GERADOS = getProcessos("Gerados");
     const PROCESSOS_RECEBIDOS = getProcessos("Recebidos");
     const SERVIDOR_LOGADO = getServidor();
     
+
     creteTable(TABLE_GERADOS);
+
     
     verificaPrazos(PROCESSO_GERADOS, SERVIDOR_LOGADO);
     verificaPrazos(PROCESSOS_RECEBIDOS, SERVIDOR_LOGADO);
@@ -127,8 +130,6 @@ function verificaPrazos(processos, servidor){
 }
 
 function creteTable(TABLE_GERADOS){
-
-    
     const table = document.createElement("table")
     const form = document.getElementById("frmProcedimentoControlar");
     const check = document.querySelector(".table #lnkInfraCheck");
@@ -138,6 +139,7 @@ function creteTable(TABLE_GERADOS){
         console.log("a");
     })
     console.log(headRow.children[0].children[0].children[0].children[1].setAttribute("onClick", "teste()"));
+
     /*
     const head = document.createElement("thead");
     const body = document.createElement("tbody");
@@ -147,6 +149,7 @@ function creteTable(TABLE_GERADOS){
     tableTitle.textContent = "Sujeito a prazo";
     headRow.appendChild(tableTitle);
     headRow.appendChild(tableDate);
+
     */
     table.appendChild(headRow);
     
@@ -165,12 +168,14 @@ function creteTable(TABLE_GERADOS){
    */
    container.classList.add("divPrazos")
    //table.appendChild(headRow);
+
    table.classList.add("table");
    divTabela.classList.add("infraAreaTabela");
    divTabela.appendChild(table);
    container.appendChild(divTabela);
    form.insertBefore(container, form.childNodes[8]);
    divTabela.setAttribute("id", "teste");
+
 }
 
 function sendMessage(message){
