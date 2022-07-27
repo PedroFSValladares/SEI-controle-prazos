@@ -1,5 +1,5 @@
 {
-    "name": "Extensão SEI++",
+    "name": "SEI Controle de prazos",
     "description": "adiciona funcionalidades para aviso e controle de prazos",
     "version": "1.0",
     "manifest_version": 3,
@@ -11,8 +11,8 @@
     "content_scripts":[
         {
             "matches": ["*://*.br/sei/*", "*://*.br/sip/*"],
-            "js": ["scripts/aviso.js"],
-            "css": ["css/table.css"]
+            "js": ["scripts/aviso.js", "scripts/createOptions.js"],
+            "css": ["css/table.css", "css/options.css"]
         },
         {
             "matches": ["*://*.br/sei/*", "*://*.br/sip/*"],
