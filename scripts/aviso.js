@@ -2,14 +2,14 @@
 
 if(document.title === "SEI - Controle de Processos"){
     setTimeout(() => {
-    }, 200)
+    }, 500)
 }
 setTimeout(() => {
     const TABLE_GERADOS = document.querySelectorAll("#tblProcessosGerados");
     const PROCESSO_GERADOS = getProcessos("Gerados");
     const PROCESSOS_RECEBIDOS = getProcessos("Recebidos");
     const SERVIDOR_LOGADO = getServidor();
-    console.log("a");
+
     creteTable(TABLE_GERADOS);
     
     verificaPrazos(PROCESSO_GERADOS, SERVIDOR_LOGADO);
@@ -18,7 +18,7 @@ setTimeout(() => {
 function getProcessos(type){
     let tableProcessos = document.querySelectorAll(`#tblProcessos${type} tr`);
     return Array.from(tableProcessos).filter((processo, index) => {
-        return index >= 2;
+        return index >= 1;
     });
 }
 function getServidor(){
@@ -30,8 +30,10 @@ function verificaPrazos(processos, servidor){
     let pr = [];
     var prazo;
     let data;
+    
     processos.forEach((processo) => {
         let serv = processo.children[3].textContent.replace("(", "").replace(")", "");
+        
         if(getData(processo) != "" && (serv === servidor || serv.textContent === "")){
             table.appendChild(processo);
             pr.push(processo);
@@ -54,14 +56,28 @@ function verificaPrazos(processos, servidor){
 function creteTable(TABLE_GERADOS){
    const table = document.createElement("table")
    const form = document.getElementById("frmProcedimentoControlar");
-   const check = document.querySelector(".table #lnkInfraCheck");
-   const headRow = document.querySelector("#tblProcessosGerados thead").cloneNode(true);
-   headRow.children[0].children[2].children[0].textContent = "Sujeitos a Prazo"
-   table.appendChild(headRow);
+   const check = document.createElement("a");
+   const imageCheck = document.createElement("img")
+   const tableHead = document.createElement("thead");
+   const headCells = [];
+
+    for(var i = 0; i < 5; i++){
+        headCells.push(document.createElement("th"));
+        headCells[i].classList.add("tituloControle");
+        headCells[i].style.width = "5%"
+        tableHead.appendChild(headCells[i]);
+    }
+    imageCheck.src = "/infra_css/imagens/check.gif";
+    check.appendChild(imageCheck);
+    headCells[0].appendChild(check);
+    headCells[2].textContent = "Sujeitos a Prazo";
+    headCells[4].textContent = "Prazo";
+    table.id = "tblProcessosComPrazos";
+    table.appendChild(tableHead);
    
    for(let i = 0; i < TABLE_GERADOS[0].attributes.length; i++){
        let atributoRenomeado = TABLE_GERADOS[0].attributes[i].value.replace("Gerados", "ComPrazos")
-       table.setAttribute(TABLE_GERADOS[0].attributes[i].name, atributoRenomeado);
+       //table.setAttribute(TABLE_GERADOS[0].attributes[i].name, atributoRenomeado);
    }
 
    const container = document.createElement("div");
@@ -78,11 +94,17 @@ function creteTable(TABLE_GERADOS){
 }
 
 function getData(processo){
-    let mouseOverText;
+    let mouseOverText = "";
     let data = "";
-    try{
-    mouseOverText = processo.children[1].children[0].getAttribute("onmouseover");
-    if(mouseOverText.lastIndexOf("Prazo") != -1) {
+    console.log(processo.children[1])
+
+    if(processo.children[1].children.length > 0){
+        mouseOverText = processo.children[1].children[0].getAttribute("onmouseover");
+        console.log(mouseOverText);
+    }
+
+    console.log(processo.children[1].children.length)
+    if(mouseOverText.lastIndexOf("Prazo") != -1 || mouseOverText != "undefined") {
         let aux = mouseOverText.substring(mouseOverText.lastIndexOf("Prazo"));
         let dataString;
         aux = aux.replace("'", "").replace("Prazo:", "").trim().split(",")[0].split("/").map((element)=>{
@@ -92,9 +114,7 @@ function getData(processo){
         dataString = aux[0];
         data = new Date(aux[2], aux[1], aux[0]);
     }
-} catch(erro){
-    console.log(erro);
-}
+    console.log(data)
     return data;
 }
 
