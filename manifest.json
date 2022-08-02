@@ -6,7 +6,7 @@
     "background": {
         "service_worker": "background.js"
     },
-    "permissions": ["scripting", "tabs", "notifications", "cookies"],
+    "permissions": ["tabs", "notifications", "storage"],
     "host_permissions": ["https://sei.df.gov.br/*"],
     "content_scripts":[
         {

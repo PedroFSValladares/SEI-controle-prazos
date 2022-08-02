@@ -26,88 +26,34 @@ function getServidor(){
     const servidorLogadoInput = document.getElementById("hdnInfraPrefixoCookie");
     return servidorLogadoInput.value.substring(servidorLogadoInput.value.lastIndexOf("_") + 1);
 }
-function verificaPrazos(/*processos,*/ servidor){
-    /*
-    let tableProcessos = Array.from(document.querySelectorAll("#divGeradosAreaTabela tr"));
-    console.log(tableProcessos);
-    let processos = tableProcessos.map((element) => {
-            return element.querySelectorAll("a");
-    });
-    let anchors = processos.filter((element, index) => {
-        if(index > 0)
-            return element;
-    })
-    console.log(anchors)
-    anchors.forEach((element, index) => {
-        anchors[index].forEach((element) => {
-            if(element.hasAttribute("onmouseover")){
-                console.log(element)
-            }
-        })
-    })
-    */
-let processos = document.querySelectorAll("#divGeradosAreaTabela tbody tr")
-console.log(processos)
-let table = document.getElementById("tblProcessosComPrazos");
-let anotacao;
-processos.forEach((element) => {
-    if(element.hasAttribute("id")){
-        try{
-            anotacao = element.querySelector("img[src='imagens/sei_anotacao_pequeno.gif']").parentNode;
-            if(anotacao != null){
+function verificaPrazos(servidor){
+    let processos = document.querySelectorAll("#divGeradosAreaTabela tbody tr")
+    let table = document.getElementById("tblProcessosComPrazos");
+    processos.forEach((element) => {
+        if(element.hasAttribute("id")){
+            anotacaoImg = element.querySelector("img[src='imagens/sei_anotacao_pequeno.gif']");
+            if(anotacaoImg != null){
+                let prazo = document. createElement("td");
+                prazo.align = "center";
+                let anotacao = anotacaoImg.parentNode;
+                prazo.textContent = getData(anotacao);
                 if(getData(anotacao) > 0 && getData(anotacao) !== ""){
+                    element.appendChild(prazo);
                     table.appendChild(anotacao.parentNode.parentNode);
-                    sendMessage({"processos": anotacao.parentNode.parentNode});    
+                    chrome.runtime.sendMessage({"processo": "adicionado"}).then(success, error);    
                 }
             }
-        }catch(e){
-            console.log(e)
         }
-        console.log(element)
-    }
-})
-
-console.log(getData(anotacao));
-/*
-let table = document.getElementById("tblProcessosComPrazos");
-let pr = [];
-var prazo;
-let data = document.createElement("td"); 
-
-data.align = "center";
-console.log(processos)
-
-processos.forEach((processo) => {
-    let serv = processo.children[3].textContent.replace("(", "").replace(")", "");
-    
-    if(getData(processo) != ""){
-        data.textContent = getData(processo);
-        processo.appendChild(data)
-        table.appendChild(processo);
-        console.log(getData())
-        pr.push(processo);
-        }
-        if(processo.children[4].textContent != "" && (serv === servidor || serv.textContent === "")){
-            table.appendChild(processo);
-            pr.push(processo);
-        }
-        
-        if(prazo != -1){}
-    });
-    console.log(pr)
-    if(pr.length != 0){
-        sendMessage({"processos": pr});    
-    }
-    */
+    })
 }
 
 function creteTable(TABLE_GERADOS){
     const table = document.createElement("table")
     const form = document.getElementById("frmProcedimentoControlar");
-const check = document.createElement("a");
-const imageCheck = document.createElement("img")
-const tableHead = document.createElement("thead");
-const headCells = [];
+    const check = document.createElement("a");
+    const imageCheck = document.createElement("img")
+    const tableHead = document.createElement("thead");
+    const headCells = [];
 
     for(var i = 0; i < 5; i++){
         headCells.push(document.createElement("th"));
@@ -174,6 +120,7 @@ function getData(processo){
     */
 
     let mouseOverText = processo.getAttribute("onmouseover")
+    console.log(mouseOverText)
     let prazo;
     if(mouseOverText.toLowerCase().lastIndexOf("prazo") != -1 || mouseOverText != "undefined") {
         let aux = mouseOverText.substring(mouseOverText.lastIndexOf("Prazo"));
@@ -189,11 +136,6 @@ function getData(processo){
         }
     }
     return (prazo == "undefined") ? "" : prazo;
-}
-
-function sendMessage(message){
-    let promisse = chrome.runtime.sendMessage(message);
-    promisse.then(success, error);
 }
 
 function success(e){
