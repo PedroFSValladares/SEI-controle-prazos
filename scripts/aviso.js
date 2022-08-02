@@ -46,33 +46,46 @@ function verificaPrazos(/*processos,*/ servidor){
         })
     })
     */
-   let processos = document.querySelectorAll("#divGeradosAreaTabela tr")
-   let anotacao = processos[1].querySelector("img[src='imagens/sei_anotacao_pequeno.gif']").parentNode
-   let table = document.getElementById("tblProcessosComPrazos");
-
-    if(getData(anotacao) > 0 && getData(anotacao) !== ""){
-        table.appendChild(anotacao.parentNode.parentNode);
-        sendMessage({"processos": anotacao.parentNode.parentNode});    
+let processos = document.querySelectorAll("#divGeradosAreaTabela tbody tr")
+console.log(processos)
+let table = document.getElementById("tblProcessosComPrazos");
+let anotacao;
+processos.forEach((element) => {
+    if(element.hasAttribute("id")){
+        try{
+            anotacao = element.querySelector("img[src='imagens/sei_anotacao_pequeno.gif']").parentNode;
+            if(anotacao != null){
+                if(getData(anotacao) > 0 && getData(anotacao) !== ""){
+                    table.appendChild(anotacao.parentNode.parentNode);
+                    sendMessage({"processos": anotacao.parentNode.parentNode});    
+                }
+            }
+        }catch(e){
+            console.log(e)
+        }
+        console.log(element)
     }
-   console.log(getData(anotacao));
-   /*
-   let table = document.getElementById("tblProcessosComPrazos");
-   let pr = [];
-   var prazo;
-   let data = document.createElement("td"); 
-   
-   data.align = "center";
-   console.log(processos)
-   
-   processos.forEach((processo) => {
-       let serv = processo.children[3].textContent.replace("(", "").replace(")", "");
-       
-       if(getData(processo) != ""){
-           data.textContent = getData(processo);
-           processo.appendChild(data)
-           table.appendChild(processo);
-           console.log(getData())
-           pr.push(processo);
+})
+
+console.log(getData(anotacao));
+/*
+let table = document.getElementById("tblProcessosComPrazos");
+let pr = [];
+var prazo;
+let data = document.createElement("td"); 
+
+data.align = "center";
+console.log(processos)
+
+processos.forEach((processo) => {
+    let serv = processo.children[3].textContent.replace("(", "").replace(")", "");
+    
+    if(getData(processo) != ""){
+        data.textContent = getData(processo);
+        processo.appendChild(data)
+        table.appendChild(processo);
+        console.log(getData())
+        pr.push(processo);
         }
         if(processo.children[4].textContent != "" && (serv === servidor || serv.textContent === "")){
             table.appendChild(processo);
@@ -91,10 +104,10 @@ function verificaPrazos(/*processos,*/ servidor){
 function creteTable(TABLE_GERADOS){
     const table = document.createElement("table")
     const form = document.getElementById("frmProcedimentoControlar");
-   const check = document.createElement("a");
-   const imageCheck = document.createElement("img")
-   const tableHead = document.createElement("thead");
-   const headCells = [];
+const check = document.createElement("a");
+const imageCheck = document.createElement("img")
+const tableHead = document.createElement("thead");
+const headCells = [];
 
     for(var i = 0; i < 5; i++){
         headCells.push(document.createElement("th"));
@@ -109,23 +122,23 @@ function creteTable(TABLE_GERADOS){
     headCells[4].textContent = "Prazo";
     table.id = "tblProcessosComPrazos";
     table.appendChild(tableHead);
-   
-   for(let i = 0; i < TABLE_GERADOS[0].attributes.length; i++){
-       let atributoRenomeado = TABLE_GERADOS[0].attributes[i].value.replace("Gerados", "ComPrazos")
-       //table.setAttribute(TABLE_GERADOS[0].attributes[i].name, atributoRenomeado);
-   }
 
-   const container = document.createElement("div");
-   const divTabela = document.createElement("div");
-   divTabela.classList.add("divPrazosAreaTabela");
+for(let i = 0; i < TABLE_GERADOS[0].attributes.length; i++){
+    let atributoRenomeado = TABLE_GERADOS[0].attributes[i].value.replace("Gerados", "ComPrazos")
+    //table.setAttribute(TABLE_GERADOS[0].attributes[i].name, atributoRenomeado);
+}
 
-   container.classList.add("divPrazos")
-   table.classList.add("table");
-   divTabela.classList.add("infraAreaTabela");
-   divTabela.appendChild(table);
-   container.appendChild(divTabela);
-   form.insertBefore(container, form.childNodes[8]);
-   divTabela.setAttribute("id", "teste");
+const container = document.createElement("div");
+const divTabela = document.createElement("div");
+divTabela.classList.add("divPrazosAreaTabela");
+
+container.classList.add("divPrazos")
+table.classList.add("table");
+divTabela.classList.add("infraAreaTabela");
+divTabela.appendChild(table);
+container.appendChild(divTabela);
+form.insertBefore(container, form.childNodes[8]);
+divTabela.setAttribute("id", "teste");
 }
 
 function getData(processo){
