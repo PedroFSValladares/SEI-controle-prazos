@@ -1,28 +1,15 @@
-//window.addEventListener("loaded", init());
 if(document.title === "SEI - Controle de Processos"){
-    setTimeout(() => {
-    }, 500)
+    init();
 }
-setTimeout(() => {
-    const TABLE_GERADOS = document.querySelectorAll("#tblProcessosGerados");
-    const PROCESSOS_GERADOS = getProcessos("Gerados");
-    const PROCESSOS_RECEBIDOS = getProcessos("Recebidos");
-    
-    creteTable(TABLE_GERADOS);
-    
-    //verificaPrazos(PROCESSOS_GERADOS, SERVIDOR_LOGADO);
-    verificaPrazos();
-    //verificaPrazos(PROCESSOS_RECEBIDOS, SERVIDOR_LOGADO); 
-},200)
-function getProcessos(type){
-    let tableProcessos = document.querySelectorAll(`#tblProcessos${type} tr`);
-    return Array.from(tableProcessos).filter((processo, index) => {
-        return index >= 1;
-    });
+async function init(){
+    creteTable();
+    verificaPrazos("Gerados");
+    verificaPrazos("Recebidos");
 }
 
-function verificaPrazos(){
-    let processos = document.querySelectorAll("#divGeradosAreaTabela tbody tr")
+function verificaPrazos(tipoProcesso){
+    let processos = document.querySelectorAll(`#div${tipoProcesso}AreaTabela tbody tr`)
+    console.log(processos);
     let table = document.getElementById("tblProcessosComPrazos");
     processos.forEach((element,index) => {
         if(element.hasAttribute("id")){
@@ -37,7 +24,7 @@ function verificaPrazos(){
                     let newElement = copyProcess(element, index);
                     newElement.appendChild(prazoTd);
                     table.appendChild(newElement);
-                    //chrome.runtime.sendMessage({"processo": "adicionado"}).then(success, error);    
+                    chrome.runtime.sendMessage("notify").then(success, error);    
                 }
             }
         }
@@ -48,15 +35,15 @@ function copyProcess(processo, i){
     let pr = document.createElement("tr");
     let processCells = Array.from(processo.children);
     console.log(processCells)
-    processCells.forEach((element) => {
-        pr.appendChild(element.cloneNode(true));
-    })
+    for(let i = 0; i < 4; i++){
+        pr.appendChild(processCells[i].cloneNode(true));
+    }
     pr.children[0].querySelector("input").id = "chkComPrazoItem" + i;
     pr.classList.add("infraTrClara")
     return pr;
 }
 
-function creteTable(TABLE_GERADOS){
+function creteTable(){
     const table = document.createElement("table")
     const form = document.getElementById("frmProcedimentoControlar");
     const check = document.createElement("a");
@@ -83,15 +70,13 @@ function creteTable(TABLE_GERADOS){
     imageCheck.src = "/infra_css/imagens/check.gif";
     check.appendChild(imageCheck);
     headCells[0].appendChild(check);
+    headCells[1].style.width = "30px";
     headCells[2].textContent = "Sujeitos a Prazo";
+    headCells[2].style.width = "100px"
     headCells[4].textContent = "Prazo";
+    headCells[4]. style.width = "50px";
     table.id = "tblProcessosComPrazos";
     table.appendChild(tableHead);
-
-    for(let i = 0; i < TABLE_GERADOS[0].attributes.length; i++){
-        let atributoRenomeado = TABLE_GERADOS[0].attributes[i].value.replace("Gerados", "ComPrazos")
-        table.setAttribute(TABLE_GERADOS[0].attributes[i].name, atributoRenomeado);
-    }
 
     const container = document.createElement("div");
     const divTabela = document.createElement("div");
@@ -113,16 +98,17 @@ function getData(processo){
     let prazo;
     if(mouseOverTextFormated.lastIndexOf("prazo") != -1 && mouseOverText != "undefined") {
         let aux = mouseOverTextFormated.substring(mouseOverTextFormated.lastIndexOf("prazo"));
-        aux = aux.replace("/['-\\/_\",.]/", "").replace("prazo:", "").trim().split(",")[0].split("/").map((element)=>{
+        let teste = aux.replace(/[-_'"().;:]/gi, "").replace("prazo", "").trim().split(",")[0].split("/")
+        console.log(teste)
+        aux = aux.replace(/[-_'"().;:]/gi, "").replace("prazo", "").trim().split(",")[0].split("/").map((element)=>{
             if(!isNaN(element))
             return element;
         });
-        console.log(aux)
         let now = new Date()
         if(aux.length == 2 || aux[2].length == 2){
-            data = new Date(now.getFullYear(), aux[1], aux[0], now.getHours(), now.getMinutes(), now.getSeconds(), now.getMilliseconds());
+            data = new Date(now.getFullYear(), aux[1]-1, aux[0], now.getHours(), now.getMinutes(), now.getSeconds(), now.getMilliseconds());
         }else{
-            data = new Date(aux[2], aux[1], aux[0], now.getHours(), now.getMinutes(), now.getSeconds(), now.getMilliseconds());
+            data = new Date(aux[2], aux[1]-1, aux[0], now.getHours(), now.getMinutes(), now.getSeconds(), now.getMilliseconds());
         }
         console.log(data)
         if(data != "Invalid Date"){

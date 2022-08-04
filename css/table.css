@@ -12,5 +12,9 @@
 .table{
     width: 92%;
     border-spacing: 0;
-    border-top: solid 1px;
+    border-top: solid black 1px;
+}
+
+.table td{
+    height: 20.8;
 }
