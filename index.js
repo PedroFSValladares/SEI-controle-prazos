@@ -2,14 +2,22 @@ if(document.title === "SEI - Controle de Processos"){
     init();
 }
 function init(){
-    creteTable();
-    verificaPrazos("Gerados");
-    verificaPrazos("Recebidos");
+    let table = creteTable();
+    if(!verificaPrazos("Gerados") && !verificaPrazos("Recebidos")){
+        let infoRow = document.createElement("tr");
+        let info = document.createElement("td");
+        info.innerHTML = "Nada para mostrar aqui, clique <a href='https://pedrofsvalladares.github.io/' target='_blank'>aqui</a> para saber como adicionar prazo a um processo.";
+        info.colSpan = "5";
+        infoRow.appendChild(info);
+        infoRow.id = "info";
+        table.appendChild(infoRow);
+    }
 }
 
 function verificaPrazos(tipoProcesso){
     let processos = document.querySelectorAll(`#div${tipoProcesso}AreaTabela tbody tr`)
     let table = document.getElementById("tblProcessosComPrazos");
+    let contemPrazos = false;
     processos.forEach((element,index) => {
         let anotacaoImg;
         if(element.hasAttribute("id")){
@@ -18,12 +26,12 @@ function verificaPrazos(tipoProcesso){
                 let prazoTd = document.createElement("td");
                 let anotacao = anotacaoImg.parentNode;
                 let prazo = getData(anotacao);
-                prazoTd.align = "center";
                 prazoTd.textContent = prazo;
                 if(prazo != undefined){
                     let newElement = copyProcess(element, index);
                     newElement.appendChild(prazoTd);
                     table.appendChild(newElement);
+                    contemPrazos = true;
                     if(prazo <= 2 || isNaN(prazo)){
                         let avisoAnchor = document.createElement("a");
                         let aviso = document.createElement("img");
@@ -37,6 +45,7 @@ function verificaPrazos(tipoProcesso){
             }
         }
     })
+    return contemPrazos
 }
 
 function copyProcess(processo, i){
@@ -51,20 +60,20 @@ function copyProcess(processo, i){
 }
 
 function creteTable(){
-    const table = document.createElement("table")
-    const form = document.getElementById("frmProcedimentoControlar");
-    const check = document.createElement("a");
-    const imageCheck = document.createElement("img")
-    const tableHead = document.createElement("thead");
-    const headCells = [];
+    let table = document.createElement("table")
+    let form = document.getElementById("frmProcedimentoControlar");
+    //let check = document.createElement("a");
+    //let imageCheck = document.createElement("img")
+    let tableHead = document.createElement("thead");
+    let container = document.createElement("div");
+    let divTabela = document.createElement("div");
 
     for(var i = 0; i < 5; i++){
-        headCells.push(document.createElement("th"));
-        headCells[i].classList.add("tituloControle");
-        headCells[i].style.width = "5%"
-        tableHead.appendChild(headCells[i]);
+        let th = document.createElement("th");
+        th.classList.add("tituloControle");
+        tableHead.appendChild(th);
     }
-
+    /*
     check.addEventListener("click", (e) => {
         let processos = Array.from(document.querySelectorAll("#tblProcessosComPrazos tr"));
         processos.forEach((element) => {
@@ -73,29 +82,27 @@ function creteTable(){
             checkStatus.checked = !(checkStatus.checked);
         });
     })
-
-    imageCheck.src = "/infra_css/imagens/check.gif";
-    check.appendChild(imageCheck);
-    headCells[0].appendChild(check);
-    headCells[1].style.width = "30px";
-    headCells[2].textContent = "Sujeitos a Prazo";
-    headCells[2].style.width = "100px"
-    headCells[4].textContent = "Prazo";
-    headCells[4]. style.width = "50px";
+    */
+    //imageCheck.src = "/infra_css/imagens/check.gif";
+    //check.appendChild(imageCheck);
+    //tableHead.children[0].appendChild(check);
+    tableHead.children[1].style.width = "30px";
+    tableHead.children[2].textContent = "Sujeitos a Prazo";
+    tableHead.children[2].style.width = "100px"
+    tableHead.children[4].textContent = "Prazo";
+    tableHead.children[4]. style.width = "50px";
     table.id = "tblProcessosComPrazos";
     table.appendChild(tableHead);
 
-    const container = document.createElement("div");
-    const divTabela = document.createElement("div");
     divTabela.classList.add("divPrazosAreaTabela");
+    divTabela.classList.add("infraAreaTabela");
 
     container.classList.add("divPrazos")
     table.classList.add("table");
-    divTabela.classList.add("infraAreaTabela");
     divTabela.appendChild(table);
     container.appendChild(divTabela);
-    form.insertBefore(container, form.childNodes[8]);
-    divTabela.setAttribute("id", "teste");
+    form.insertBefore(container, form.children[4]);
+    return table;
 }
 
 function getData(processo){
@@ -104,12 +111,12 @@ function getData(processo){
     let prazo;
     if(mouseOverTextFormated.lastIndexOf("prazo") != -1 && mouseOverText != "undefined") {
         let aux = mouseOverTextFormated.substring(mouseOverTextFormated.lastIndexOf("prazo"));
-        aux = aux.replace(/[-_'"().;:]/gi, "").replace("prazo", "").trim().split(",")[0].split("/").map((element)=>{
+        aux = aux.replace(/[-_'"().;:prazo]/gi, "").trim().split(",")[0].split("/").map((element)=>{
             if(!isNaN(element))
-            return element;
+                return element;
         });
         let now = new Date()
-        if(aux.length == 2 || aux[2].length == 2){
+        if(aux.length == 2 || aux[2].length <= 2){
             data = new Date(now.getFullYear(), aux[1]-1, aux[0], now.getHours(), now.getMinutes(), now.getSeconds(), now.getMilliseconds());
         }else{
             data = new Date(aux[2], aux[1]-1, aux[0], now.getHours(), now.getMinutes(), now.getSeconds(), now.getMilliseconds());
