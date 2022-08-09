@@ -109,17 +109,25 @@ function getData(processo){
     let mouseOverText = processo.getAttribute("onmouseover")
     let mouseOverTextFormated = mouseOverText.toLowerCase()
     let prazo;
+    let dataArray = [];
     if(mouseOverTextFormated.lastIndexOf("prazo") != -1 && mouseOverText != "undefined") {
         let aux = mouseOverTextFormated.substring(mouseOverTextFormated.lastIndexOf("prazo"));
-        aux = aux.replace(/[-_'"().;:prazo]/gi, "").trim().split(",")[0].split("/").map((element)=>{
-            if(!isNaN(element))
-                return element;
-        });
-        let now = new Date()
-        if(aux.length == 2 || aux[2].length <= 2){
-            data = new Date(now.getFullYear(), aux[1]-1, aux[0], now.getHours(), now.getMinutes(), now.getSeconds(), now.getMilliseconds());
+        if(aux.lastIndexOf("/") != -1){
+            aux = aux.split("/");
         }else{
-            data = new Date(aux[2], aux[1]-1, aux[0], now.getHours(), now.getMinutes(), now.getSeconds(), now.getMilliseconds());
+            aux.split("\\");
+        }
+        
+        aux.forEach((element) => {
+            dataArray.push(element.replace(/[\D]/gi, ""))
+        })
+
+        console.log(dataArray)
+        let now = new Date()
+        if(dataArray.length == 2 || dataArray[2].length <= 2){
+            data = new Date(now.getFullYear(), dataArray[1]-1, dataArray[0], now.getHours(), now.getMinutes(), now.getSeconds(), now.getMilliseconds());
+        }else{
+            data = new Date(dataArray[2], dataArray[1]-1, dataArray[0], now.getHours(), now.getMinutes(), now.getSeconds(), now.getMilliseconds());
         }
         if(data != "Invalid Date"){
             if(data < now){
