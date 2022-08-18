@@ -62,8 +62,8 @@ function copyProcess(processo, i){
 function creteTable(){
     let table = document.createElement("table")
     let form = document.getElementById("frmProcedimentoControlar");
-    //let check = document.createElement("a");
-    //let imageCheck = document.createElement("img")
+    let check = document.createElement("a");
+    let imageCheck = document.createElement("img")
     let tableHead = document.createElement("thead");
     let container = document.createElement("div");
     let divTabela = document.createElement("div");
@@ -73,19 +73,21 @@ function creteTable(){
         th.classList.add("tituloControle");
         tableHead.appendChild(th);
     }
-    /*
+    
     check.addEventListener("click", (e) => {
         let processos = Array.from(document.querySelectorAll("#tblProcessosComPrazos tr"));
         processos.forEach((element) => {
             let checkStatus = element.querySelector("input")
-            element.classList.toggle("infraTrMarcada");
-            checkStatus.checked = !(checkStatus.checked);
+            if (checkStatus != null){
+                checkStatus.click();
+            }
         });
+        
     })
-    */
-    //imageCheck.src = "/infra_css/imagens/check.gif";
-    //check.appendChild(imageCheck);
-    //tableHead.children[0].appendChild(check);
+    
+    imageCheck.src = "/infra_css/imagens/check.gif";
+    check.appendChild(imageCheck);
+    tableHead.children[0].appendChild(check);
     tableHead.children[1].style.width = "30px";
     tableHead.children[2].textContent = "Sujeitos a Prazo";
     tableHead.children[2].style.width = "100px"
@@ -121,8 +123,6 @@ function getData(processo){
         aux.forEach((element) => {
             dataArray.push(element.replace(/[\D]/gi, ""))
         })
-
-        console.log(dataArray)
         let now = new Date()
         if(dataArray.length == 2 || dataArray[2].length <= 2){
             data = new Date(now.getFullYear(), dataArray[1]-1, dataArray[0], now.getHours(), now.getMinutes(), now.getSeconds(), now.getMilliseconds());
