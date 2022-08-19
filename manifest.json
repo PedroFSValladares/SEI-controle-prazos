@@ -12,5 +12,11 @@
             "css": ["css/table.css"]
         }
     ],
+    "web_accessible_resources": [
+        {
+            "resources": ["images/*"],
+            "matches": ["https://sei.df.gov.br/*"]
+        }
+    ],
     "icons": {"128": "images/SEI-logo.png"}
 }
