@@ -5,11 +5,17 @@
     "manifest_version": 3,
     "permissions": [],
     "host_permissions": ["https://sei.df.gov.br/*"],
-    "content_scripts":[
+    "content_scripts": [
         {
             "matches": ["*://*.br/sei/*", "*://*.br/sip/*"],
             "js": ["index.js"],
             "css": ["css/table.css"]
+        }
+    ],
+    "web_accessible_resources": [
+        {
+            "resources": ["tutorial/index.html", "css/popup.css", "images/*", "teste.js"],
+            "matches": ["https://sei.df.gov.br/*"]
         }
     ],
     "icons": {"128": "images/SEI-logo.png"}

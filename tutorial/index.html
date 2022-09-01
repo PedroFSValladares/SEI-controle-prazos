@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+    <html lang="pt-br">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="assets/css/style.css">
+        <title>SEI: Controle de Prazos</title>
+    </head>
+    <body>
+        <div class="main-container">
+            <div class="container">
+                <h1>Controle de prazos do SEI</h1>
+            </div>
+            <div class="player">
+                <video poster="./assets/images/SEI_thumb.png" controls>
+                    <source src="./assets/videos/video_tutorial.mp4" type="video/mp4">
+                </video>
+            </div>
+            <ul>
+                <li>
+                    <a href="#adicionar">Adicionando prazo a um processo.</a>
+                </li>
+                <li>
+                    <a href="#remover">Removendo prazo de um processo.</a>
+                </li>
+            </ul>
+            <h2 id="adicionar">Adicionando prazo a um processo</h2>
+            <div class="passo">
+                <p>Abra ou selecione o processo ao qual quer adicionar um prazo, neste caso o processo <strong> 0040-00026763/2022-55</strong>. Clique no botão "anotação" 
+                    <img src="./assets/images/btn_anotacao.jpg" alt="SEI anotação" class="btn-anotacao">. <br>
+                    Caso o processo já contenha uma anotação 
+                    <img src="./assets/images/anotacao.jpg" alt=""> basta clicar nela para edita-la.
+                </p>
+                <figure>
+                    <img src="./assets/images/adicionar_anotacao.png" alt="SEI_processo_com_anotacao">
+                </figure>
+            </div>
+            <div class="passo">
+                <p>Adicione no campo de texto o termo "<strong>prazo</strong>" e em seguida a data do prazo. Note que que qualquer data escrita <strong>antes</strong> do termo "prazo" será ignorada. <br>
+                <strong>Obs.:</strong> os formatos de data suportados são <strong>dd/mm</strong>, <strong>dd/mm/aa</strong> e <strong>dd/mm/aaaa</strong>. <br><br>
+                Agora basta clicar em Salvar 
+                <img src="./assets/images/btn_anotacao_salvar.jpg" alt="botão_anotacao_salvar">
+                </p>
+                <figure>
+                    <img src="./assets/images/adicionar_prazo.png" alt="adicionar_editar_anotacao">
+                </figure>
+            </div>
+            <div class="passo">
+                <p>O processo <strong>0040-00026763/2022-55</strong> se encontra agora na tabela <strong>Sujeitos a Prazo</strong> ao qual possui uma coluna com o numero de <strong>dias</strong> até o prazo especificado.</p>
+                <figure>
+                    <img src="./assets/images/processo_adicionado.png" alt="processo_adicionado">
+                </figure>
+            </div>
+            <h2 id="remover">Removendo prazo de um processo</h2>
+            <div class="passo">
+                <p>Abra ou selecione o processo ao qual quer remover o prazo, neste caso o processo <strong>0040-00026763/2022-55</strong>. Clique no botão "anotação" 
+                    <img src="./assets/images/btn_anotacao.jpg" alt="SEI anotação">. Caso o processo já contenha uma anotação 
+                    <img src="./assets/images/anotacao.jpg" alt=""> basta clicar nela para edita-la.
+                <figure>
+                    <img src="./assets/images/removendo_anotacao.png" alt="processo_adicionado">
+                </figure>
+            </div>
+            <div class="passo">
+                <p>No conteúdo da caixa de texto remova a data de prazo e logo após clique em Salvar
+                    <img src="./assets/images/btn_anotacao_salvar.jpg" alt="">
+                </p>
+                <figure>
+                    <img src="./assets/images/remover_prazo.png" alt="">
+                </figure>
+            </div>
+            <div class="passo">
+                <p>Note que agora o processo não se encontra mais na tabela "<strong>Sujeitos a Prazo</strong>.</p>
+                <figure>
+                    <img src="./assets/images/processo_removido.png" alt="">
+                </figure>
+            </div>
+        </div> 
+    </body>
+</html>

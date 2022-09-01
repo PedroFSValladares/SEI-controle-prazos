@@ -2,11 +2,12 @@ if(document.title === "SEI - Controle de Processos"){
     init();
 }
 function init(){
-    let table = creteTable();
+    var table = creteTable();
     if(!verificaPrazos("Gerados") && !verificaPrazos("Recebidos")){
-        let infoRow = document.createElement("tr");
-        let info = document.createElement("td");
-        info.innerHTML = "Nada para mostrar aqui, clique <a href='https://pedrofsvalladares.github.io/' target='_blank'>aqui</a> para saber como adicionar prazo a um processo.";
+        var infoRow = document.createElement("tr");
+        var info = document.createElement("td");
+        var tutorialURL = chrome.runtime.getURL("./tutorial/index.html")
+        info.innerHTML = `Nada para mostrar aqui, clique <a href='${tutorialURL}' target='_blank'>aqui</a> para saber como adicionar prazo a um processo.`;
         info.colSpan = "5";
         infoRow.appendChild(info);
         infoRow.id = "info";
@@ -15,26 +16,26 @@ function init(){
 }
 
 function verificaPrazos(tipoProcesso){
-    let processos = document.querySelectorAll(`#div${tipoProcesso}AreaTabela tbody tr`)
-    let table = document.getElementById("tblProcessosComPrazos");
-    let contemPrazos = false;
+    var processos = document.querySelectorAll(`#div${tipoProcesso}AreaTabela tbody tr`)
+    var table = document.getElementById("tblProcessosComPrazos");
+    var contemPrazos = false;
     processos.forEach((element,index) => {
-        let anotacaoImg;
+        var anotacaoImg;
         if(element.hasAttribute("id")){
             anotacaoImg = element.querySelector("img[src='imagens/sei_anotacao_pequeno.gif']");
             if(anotacaoImg != null){
-                let prazoTd = document.createElement("td");
-                let anotacao = anotacaoImg.parentNode;
-                let prazo = getData(anotacao);
+                var prazoTd = document.createElement("td");
+                var anotacao = anotacaoImg.parentNode;
+                var prazo = getData(anotacao);
                 prazoTd.textContent = prazo;
                 if(prazo != undefined){
-                    let newElement = copyProcess(element, index);
+                    var newElement = copyProcess(element, index);
                     newElement.appendChild(prazoTd);
                     table.appendChild(newElement);
                     contemPrazos = true;
                     if(prazo <= 2 || isNaN(prazo)){
-                        let avisoAnchor = document.createElement("a");
-                        let aviso = document.createElement("img");
+                        var avisoAnchor = document.createElement("a");
+                        var aviso = document.createElement("img");
                         avisoAnchor.setAttribute("onmouseover", "return infraTooltipMostrar('Processo se aproximando do prazo!', 'Aviso');");
                         avisoAnchor.setAttribute("onmouseout", "return infraTooltipOcultar();");
                         aviso.src = "imagens/exclamacao.png";
@@ -49,9 +50,9 @@ function verificaPrazos(tipoProcesso){
 }
 
 function copyProcess(processo, i){
-    let pr = document.createElement("tr");
-    let processCells = Array.from(processo.children);
-    for(let i = 0; i < 4; i++){
+    var pr = document.createElement("tr");
+    var processCells = Array.from(processo.children);
+    for(var i = 0; i < 4; i++){
         pr.appendChild(processCells[i].cloneNode(true));
     }
     pr.children[0].querySelector("input").id = "chkComPrazoItem" + i;
@@ -60,24 +61,24 @@ function copyProcess(processo, i){
 }
 
 function creteTable(){
-    let table = document.createElement("table")
-    let form = document.getElementById("frmProcedimentoControlar");
-    let check = document.createElement("a");
-    let imageCheck = document.createElement("img")
-    let tableHead = document.createElement("thead");
-    let container = document.createElement("div");
-    let divTabela = document.createElement("div");
+    var table = document.createElement("table")
+    var form = document.getElementById("frmProcedimentoControlar");
+    var check = document.createElement("a");
+    var imageCheck = document.createElement("img")
+    var tableHead = document.createElement("thead");
+    var container = document.createElement("div");
+    var divTabela = document.createElement("div");
 
     for(var i = 0; i < 5; i++){
-        let th = document.createElement("th");
+        var th = document.createElement("th");
         th.classList.add("tituloControle");
         tableHead.appendChild(th);
     }
     
     check.addEventListener("click", (e) => {
-        let processos = Array.from(document.querySelectorAll("#tblProcessosComPrazos tr"));
+        var processos = Array.from(document.querySelectorAll("#tblProcessosComPrazos tr"));
         processos.forEach((element) => {
-            let checkStatus = element.querySelector("input")
+            var checkStatus = element.querySelector("input")
             if (checkStatus != null){
                 checkStatus.click();
             }
@@ -108,12 +109,12 @@ function creteTable(){
 }
 
 function getData(processo){
-    let mouseOverText = processo.getAttribute("onmouseover")
-    let mouseOverTextFormated = mouseOverText.toLowerCase()
-    let prazo;
-    let dataArray = [];
+    var mouseOverText = processo.getAttribute("onmouseover")
+    var mouseOverTextFormated = mouseOverText.toLowerCase()
+    var prazo;
+    var dataArray = [];
     if(mouseOverTextFormated.lastIndexOf("prazo") != -1 && mouseOverText != "undefined") {
-        let aux = mouseOverTextFormated.substring(mouseOverTextFormated.lastIndexOf("prazo"));
+        var aux = mouseOverTextFormated.substring(mouseOverTextFormated.lastIndexOf("prazo"));
         if(aux.lastIndexOf("/") != -1){
             aux = aux.split("/");
         }else{
@@ -123,7 +124,7 @@ function getData(processo){
         aux.forEach((element) => {
             dataArray.push(element.replace(/[\D]/gi, ""))
         })
-        let now = new Date()
+        var now = new Date()
         if(dataArray.length == 2 || dataArray[2].length <= 2){
             data = new Date(now.getFullYear(), dataArray[1]-1, dataArray[0], now.getHours(), now.getMinutes(), now.getSeconds(), now.getMilliseconds());
         }else{
