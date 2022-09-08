@@ -1,6 +1,8 @@
-if(document.title === "SEI - Controle de Processos"){
+if(document.title === "SEI - Controle de Processos" && document.URL.indexOf("ver_por_marcadores=1") === -1){
     init();
 }
+// Ponto de início da extensão
+// Adciona o texto padrão caso não haja processos com prazo.
 function init(){
     var table = creteTable();
     if(!verificaPrazos("Gerados") && !verificaPrazos("Recebidos")){
@@ -15,6 +17,7 @@ function init(){
     }
 }
 
+// Verifica se os processos possuem prazos atribuídos a eles.
 function verificaPrazos(tipoProcesso){
     var processos = document.querySelectorAll(`#div${tipoProcesso}AreaTabela tbody tr`)
     var table = document.getElementById("tblProcessosComPrazos");
@@ -49,6 +52,7 @@ function verificaPrazos(tipoProcesso){
     return contemPrazos
 }
 
+// Copia os processos com prazo
 function copyProcess(processo, i){
     var pr = document.createElement("tr");
     var processCells = Array.from(processo.children);
@@ -60,6 +64,7 @@ function copyProcess(processo, i){
     return pr;
 }
 
+// Cria a tabela de prazos
 function creteTable(){
     var table = document.createElement("table")
     var form = document.getElementById("frmProcedimentoControlar");
@@ -108,6 +113,7 @@ function creteTable(){
     return table;
 }
 
+// Extrai a data da anotação do processo
 function getData(processo){
     var mouseOverText = processo.getAttribute("onmouseover")
     var mouseOverTextFormated = mouseOverText.toLowerCase()
