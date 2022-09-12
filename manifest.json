@@ -1,7 +1,7 @@
 {
     "name": "SEI Controle de prazos",
     "description": "Adiciona funcionalidades para aviso e controle de prazos",
-    "version": "1.0.2",
+    "version": "1.0.3",
     "manifest_version": 3,
     "permissions": [],
     "host_permissions": ["https://sei.df.gov.br/*"],

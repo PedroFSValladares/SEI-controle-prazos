@@ -35,7 +35,6 @@ function verificaPrazos(tipoProcesso){
                     var newElement = copyProcess(element, index);
                     newElement.appendChild(prazoTd);
                     table.appendChild(newElement);
-                    console.log(newElement);
                     contemPrazos = true;
                     if(prazo <= 2 || isNaN(prazo)){
                         var avisoAnchor = document.createElement("a");
