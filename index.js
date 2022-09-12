@@ -5,7 +5,7 @@ if(document.title === "SEI - Controle de Processos" && document.URL.indexOf("ver
 // Adciona o texto padrão caso não haja processos com prazo.
 function init(){
     var table = creteTable();
-    if(!verificaPrazos("Gerados") && !verificaPrazos("Recebidos")){
+    if(!verificaPrazos("Gerados") & !verificaPrazos("Recebidos")){
         var infoRow = document.createElement("tr");
         var info = document.createElement("td");
         var tutorialURL = chrome.runtime.getURL("./tutorial/index.html")
@@ -16,14 +16,14 @@ function init(){
         table.appendChild(infoRow);
     }
 }
-
+//00196-00000467/2022-32
 // Verifica se os processos possuem prazos atribuídos a eles.
 function verificaPrazos(tipoProcesso){
     var processos = document.querySelectorAll(`#div${tipoProcesso}AreaTabela tbody tr`)
     var table = document.getElementById("tblProcessosComPrazos");
     var contemPrazos = false;
+    var anotacaoImg;
     processos.forEach((element,index) => {
-        var anotacaoImg;
         if(element.hasAttribute("id")){
             anotacaoImg = element.querySelector("img[src='imagens/sei_anotacao_pequeno.gif']");
             if(anotacaoImg != null){
@@ -35,6 +35,7 @@ function verificaPrazos(tipoProcesso){
                     var newElement = copyProcess(element, index);
                     newElement.appendChild(prazoTd);
                     table.appendChild(newElement);
+                    console.log(newElement);
                     contemPrazos = true;
                     if(prazo <= 2 || isNaN(prazo)){
                         var avisoAnchor = document.createElement("a");
