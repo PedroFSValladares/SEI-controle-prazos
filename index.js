@@ -94,11 +94,11 @@ function creteTable(){
     imageCheck.src = "/infra_css/imagens/check.gif";
     check.appendChild(imageCheck);
     tableHead.children[0].appendChild(check);
-    tableHead.children[1].style.width = "30px";
+    tableHead.children[1].style.width = "50px";
     tableHead.children[2].textContent = "Sujeitos a Prazo";
     tableHead.children[2].style.width = "100px"
     tableHead.children[4].textContent = "Prazo";
-    tableHead.children[4]. style.width = "50px";
+    tableHead.children[4]. style.width = "20px";
     table.id = "tblProcessosComPrazos";
     table.appendChild(tableHead);
 
@@ -119,33 +119,37 @@ function getData(processo){
     var mouseOverTextFormated = mouseOverText.toLowerCase()
     var prazo;
     var dataArray = [];
-    if(mouseOverTextFormated.lastIndexOf("prazo") != -1 && mouseOverText != "undefined") {
-        var aux = mouseOverTextFormated.substring(mouseOverTextFormated.lastIndexOf("prazo"));
-        if(aux.lastIndexOf("/") != -1){
-            aux = aux.split("/");
-        }else{
-            aux.split("\\");
-        }
-        
-        aux.forEach((element) => {
-            dataArray.push(element.replace(/[\D]/gi, ""))
-        })
-        var now = new Date()
-        if(dataArray.length == 2 || dataArray[2].length <= 2){
-            data = new Date(now.getFullYear(), dataArray[1]-1, dataArray[0], now.getHours(), now.getMinutes(), now.getSeconds(), now.getMilliseconds());
-        }else{
-            data = new Date(dataArray[2], dataArray[1]-1, dataArray[0], now.getHours(), now.getMinutes(), now.getSeconds(), now.getMilliseconds());
-        }
-        if(data != "Invalid Date"){
-            if(data < now){
-                prazo = "vencido";
+    var textLines = mouseOverTextFormated.split("\\n");
+    textLines.forEach((element) => {
+        if(element.lastIndexOf("prazo") != -1 && mouseOverText != "undefined") {
+            var aux = element.substring(element.lastIndexOf("prazo"));
+            if(aux.lastIndexOf("/") != -1){
+                aux = aux.split("/");
             }else{
-                prazo = Math.abs(data - now) / (1000 * 3600 * 24);
-                if(prazo == 0){
-                    prazo = "hoje";
+                aux.split("\\");
+            }
+            
+            aux.forEach((element) => {
+                dataArray.push(element.replace(/[\D]/gi, ""))
+            })
+            var now = new Date()
+            if(dataArray.length == 2 || dataArray[2].length <= 2){
+                data = new Date(now.getFullYear(), dataArray[1]-1, dataArray[0], now.getHours(), now.getMinutes(), now.getSeconds(), now.getMilliseconds());
+            }else{
+                data = new Date(dataArray[2], dataArray[1]-1, dataArray[0], now.getHours(), now.getMinutes(), now.getSeconds(), now.getMilliseconds());
+            }
+            if(data != "Invalid Date"){
+                if(data < now){
+                    prazo = "vencido";
+                }else{
+                    prazo = Math.abs(data - now) / (1000 * 3600 * 24);
+                    if(prazo == 0){
+                        prazo = "hoje";
+                    }
                 }
             }
-        }
-    }
+        } 
+    })
+
     return prazo;
 }
