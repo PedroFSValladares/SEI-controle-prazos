@@ -1,8 +1,8 @@
-.tabelaPrazos{ 
+.tabelaPrazos, .tabelaFiltrados{ 
     height: 500px;
 }
 
-.divPrazos{
+#divPrazos, #divFiltrados{
     float: right;
     min-width: 48%;
     margin-top: 80px;

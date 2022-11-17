@@ -1,20 +1,31 @@
 {
     "name": "SEI Controle de prazos",
     "description": "Adiciona funcionalidades para aviso e controle de prazos",
-    "version": "1.0.4",
+    "version": "1.1.0",
     "manifest_version": 3,
-    "permissions": [],
+    "permissions": ["storage"],
     "host_permissions": ["https://sei.df.gov.br/*"],
+    "background":{
+        "service_worker": "background.js"
+    },
     "content_scripts": [
         {
             "matches": ["*://*.br/sei/*", "*://*.br/sip/*"],
-            "js": ["index.js"],
-            "css": ["css/table.css"]
+            "exclude_matches": ["*://*.br/*login.php*",
+                "*://*.br/sip/*controlador.php*",
+                "*://*.br/sei/*controlador_externo.php*",
+                "*://*.br/sei/controlador.php?acao=procedimento_controlar&ver_por_marcadores=1*",
+                "*://*.br/sei/*acao=procedimento_trabalhar*",
+                "*://sip-sei.ans.gov.br/login.php*",
+                "*://sip-sei.ans.gov.br/controlador.php*",
+                "*://sip-sei.ans.gov.br/controlador_externo.php*"],
+            "js": ["js/lib/jQuery-3.6.1.js","js/createTables.js", "js/adicionaPrazos.js", "js/getMarcadores.js", "js/filtrarProcessos.js"],
+            "css": ["css/table.css", "css/opcoes.css"]
         }
     ],
     "web_accessible_resources": [
         {
-            "resources": ["tutorial/index.html", "css/popup.css", "images/*", "teste.js"],
+            "resources": ["tutorial/index.html", "css/popup.css", "images/*", "js/lib/*"],
             "matches": ["https://sei.df.gov.br/*"]
         }
     ],
