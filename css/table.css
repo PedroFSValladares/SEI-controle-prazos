@@ -4,12 +4,12 @@
 
 #divPrazos, #divFiltrados{
     float: right;
-    min-width: 48%;
+    width: 100%;
     margin-top: 80px;
 }
 
 .table{
-    width: 95%;
+    width: 92%;
     border-spacing: 0;
     border-top: solid black 1px;
 }

@@ -2,6 +2,8 @@
     background-color: white;
     padding: 5px;
     border-radius: 10px;
+    width: 92%;
+    float: left;
 }
 
 .janelaOpcoes select{
