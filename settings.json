@@ -1,0 +1,9 @@
+{
+    "appRoot": "src",
+    "appEntryPoint": "main.js",
+    "manifestPath": "manifest.json",
+    "includeDirs": [
+        "lib",
+        "components"
+    ]
+}
