@@ -1,0 +1,29 @@
+.tabelaPrazos, .tabelaFiltrados{ 
+    height: 500px;
+}
+
+#divPrazos, #divFiltrados{
+    float: right;
+    width: 100%;
+    margin-top: 80px;
+}
+
+.table{
+    width: 92%;
+    border-spacing: 0;
+    border-top: solid black 1px;
+}
+
+.table td{
+    height: 20.8;
+    text-align: center;
+}
+
+.table th{
+    width: 5%;
+    height: 20px;
+}
+
+#info{
+    font-size: 14px;
+}
