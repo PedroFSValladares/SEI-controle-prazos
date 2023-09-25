@@ -1,0 +1,13 @@
+{
+    "appRoot": "../src",
+    "appEntryPoint": "main.js",
+    "manifestPath": "manifest.json",
+    "output": {
+        "appName": "sei-controle-prazos",
+        "output-dir": "output"
+    },
+    "includeDirs": [
+        "lib",
+        "components"
+    ]
+}

@@ -17,14 +17,13 @@ imports.push(appEntryPoint)
 imports = imports.map((element) => {return element.replace("src\\", "")}).map((element) => { return element.replaceAll("\\", "/")})
 
 var manifestJson = fs.readFileSync(manifestPath,{encoding: "utf-8"})
-var newManifest
+
 var manifest = JSON.parse(manifestJson)
 manifest.content_scripts[0].js = imports
 manifestJson = JSON.stringify(manifest, null, 3)
 fs.writeFileSync(manifestPath, manifestJson)
 
-//console.log(manifestJson)
-
+console.log("Dependências atualizadas.")
 
 function readdirRecursive(dir){
     var fileStat = fs.statSync(dir)
