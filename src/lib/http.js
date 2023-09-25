@@ -1,5 +1,5 @@
 class Http {
-    httpRequest = new XMLHttpRequest()
+    static httpRequest = new XMLHttpRequest()
     response
 
     constructor(){
@@ -17,11 +17,9 @@ class Http {
     }
 
     // obtem a página com a lista de marcadores
-    request(url, method, body = null){    
+    static request(url, method, body = null){    
         this.httpRequest.open(method, url, false)
         this.httpRequest.send(body);
         return this.httpRequest.responseText
     }
 }
-
-var http = new Http()

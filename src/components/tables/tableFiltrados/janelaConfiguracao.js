@@ -13,10 +13,10 @@ class JanelaConfiguracao{
         var closeButton = document.createElement("a")
         var closeIcon = document.createElement("img")
         
-        refreshIcon.setAttribute("src", extension.getIconUrl("./images/icons/refresh.png"))
+        refreshIcon.setAttribute("src", Extension.getIconUrl("./images/icons/refresh.png"))
         refreshButton.appendChild(refreshIcon)
     
-        closeIcon.setAttribute("src", extension.getIconUrl("./images/icons/close.png"))
+        closeIcon.setAttribute("src", Extension.getIconUrl("./images/icons/close.png"))
         closeButton.addEventListener("click", (event) => {
             $(janela).hide()
         })
@@ -34,8 +34,8 @@ class JanelaConfiguracao{
             config.marcadores = []
             select.innerHTML = ""
             
-            var marcadoresRaw = http.request(htmlExtractor.extractMarcadorUrl(), "GET")
-            config.marcadores = htmlExtractor.extrairMarcadores(marcadoresRaw)
+            var marcadoresRaw = Http.request(HtmlExtractor.extractMarcadorUrl(), "GET")
+            config.marcadores = HtmlExtractor.extrairMarcadores(marcadoresRaw)
             config.update()
             
            this.carregarMarcadores()

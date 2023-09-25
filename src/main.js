@@ -31,8 +31,8 @@ var linktabelaFiltro = new LinktabelaFiltro()
 menu.appendChild(linktabelaFiltro.root)
 
 if(config.marcadores.length <= 0){
-    var marcadoresRaw = http.request(htmlExtractor.extractMarcadorUrl(), "GET")
-    config.marcadores = htmlExtractor.extrairMarcadores(marcadoresRaw)
+    var marcadoresRaw = Http.request(HtmlExtractor.extractMarcadorUrl(), "GET")
+    config.marcadores = HtmlExtractor.extrairMarcadores(marcadoresRaw)
     config.update()
     //document.location.reload()
 }

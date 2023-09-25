@@ -1,5 +1,5 @@
 class Extension {
-    getIconUrl(path){
+    static getIconUrl(path){
         if(typeof browser === "undefined"){
             return chrome.runtime.getURL(path)
         }else{
@@ -7,5 +7,3 @@ class Extension {
         }
     }
 }
-
-var extension = new Extension()

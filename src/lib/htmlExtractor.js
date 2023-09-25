@@ -1,6 +1,6 @@
 class HtmlExtractor {
     // processa a resposta para extrair os marcadores
-    extrairMarcadores(doc = ""){
+    static extrairMarcadores(doc = ""){
         var linhas = doc.split("\n")
         var marcadoresContents = []
         var marcadoresTitles = []
@@ -36,7 +36,7 @@ class HtmlExtractor {
         return marcadores
     }
     
-    extractTexts(texto = ""){
+    static extractTexts(texto = ""){
         var result
         if(texto.indexOf("src") != -1){
             result = texto.replace(/src="/i, "") + ".png"
@@ -46,16 +46,16 @@ class HtmlExtractor {
         return result.replace("\"", "")
     }
 
-    extractMarcadorUrl(){
+    static extractMarcadorUrl(){
         var menuItem = Array.from($("#main-menu li a")).filter((element) => { return element.textContent == "Marcadores" }).pop();
         return menuItem.href
     }
 
-    getFormUrl(){
+    static getFormUrl(){
         return document.getElementById("frmProcedimentoControlar").action
     }
 
-    getPaginationUrl(pag){
+    static getPaginationUrl(pag){
         var inputs = Array.from(document.getElementById("frmProcedimentoControlar").querySelectorAll("input[type=hidden]"))
         var parans = inputs.map(element => { 
             return (element.name == "hdnRecebidosPaginaAtual") ? `${element.name}=${encodeURIComponent(pag)}` : `${element.name}=${encodeURIComponent(element.value)}`   
@@ -63,10 +63,8 @@ class HtmlExtractor {
         return parans.join("&")
     }
 
-    getProcessFromHTML(html){
+    static getProcessFromHTML(html){
         var processTr = document.createElement("tr")
         return html.split(/<tr*>*<\/tr>/)
     }
 }
-
-var htmlExtractor = new HtmlExtractor()

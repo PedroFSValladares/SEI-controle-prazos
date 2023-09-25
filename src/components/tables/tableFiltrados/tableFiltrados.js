@@ -17,7 +17,7 @@ class TableFiltrados extends Table{
         this.root.firstChild.insertBefore(caption, this.root.querySelector("thead"))
         
         buttonConfig.appendChild(configIcon)
-        configIcon.src = extension.getIconUrl("./images/icons/config.png")
+        configIcon.src = Extension.getIconUrl("./images/icons/config.png")
         
         tableHead.children[3].appendChild(buttonConfig)
         buttonConfig.addEventListener("click", (event) => {
