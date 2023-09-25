@@ -13,8 +13,11 @@ for (let index = 0; index < appDirs.length; index++) {
     imports = imports.concat(readdirRecursive(path.join(appRoot, settings.includeDirs[index])));
 }
 
+imports = imports.map((element) => { return element.replaceAll("\\", "/")})
+.map((element) => {
+    return element.substr(element.indexOf(appRoot) + appRoot.length)
+})
 imports.push(appEntryPoint)
-imports = imports.map((element) => {return element.replace("src\\", "")}).map((element) => { return element.replaceAll("\\", "/")})
 
 var manifestJson = fs.readFileSync(manifestPath,{encoding: "utf-8"})
 
