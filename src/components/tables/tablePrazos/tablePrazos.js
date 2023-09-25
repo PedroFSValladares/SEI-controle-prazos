@@ -75,6 +75,6 @@ class TablePrazos extends Table{
                 }
             } 
         })
-        return prazo;
+        return prazo == undefined ? "prazo indefinido" : prazo;
     }
 }
