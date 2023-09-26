@@ -1,0 +1,24 @@
+{
+  "dependencies": {
+    "archiver": "^6.0.1"
+  },
+  "name": "sei-controle-prazos",
+  "version": "1.0.0",
+  "main": "index.js",
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "att": "node scripts/update.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/PedroFSValladares/SEI-controle-prazos.git"
+  },
+  "author": "Pedro Valladares",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/PedroFSValladares/SEI-controle-prazos/issues"
+  },
+  "homepage": "https://github.com/PedroFSValladares/SEI-controle-prazos#readme",
+  "description": ""
+}
