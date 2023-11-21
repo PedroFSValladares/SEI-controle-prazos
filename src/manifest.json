@@ -1,7 +1,7 @@
 {
    "name": "SEI Controle de prazos",
    "description": "Adiciona funcionalidades para aviso e controle de prazos",
-   "version": "1.1.5",
+   "version": "1.1.6",
    "manifest_version": 3,
    "permissions": [
       "storage"
@@ -36,21 +36,23 @@
             "*://*.br/sei/controlador.php?acao=rel_bloco_protocolo_listar*"
          ],
          "js": [
-            "lib/alarm.js",
-            "lib/alarmConfig.js",
-            "lib/alarmManager.js",
-            "lib/config.js",
-            "lib/extension.js",
-            "lib/htmlExtractor.js",
-            "lib/http.js",
-            "lib/jQuery-3.6.1.js",
-            "components/alarmes/menuButton/menuButton.js",
-            "components/container.js",
-            "components/tables/table.js",
-            "components/tables/tableFiltrados/janelaConfiguracao.js",
-            "components/tables/tableFiltrados/linkTabelaFiltro.js",
-            "components/tables/tableFiltrados/tableFiltrados.js",
-            "components/tables/tablePrazos/tablePrazos.js",
+            "/lib/alarm.js",
+            "/lib/alarmConfig.js",
+            "/lib/alarmManager.js",
+            "/lib/config.js",
+            "/lib/extension.js",
+            "/lib/htmlExtractor.js",
+            "/lib/http.js",
+            "/lib/jQuery-3.6.1.js",
+            "/lib/paginationManager.js",
+            "/lib/processo.js",
+            "/components/alarmes/menuButton/menuButton.js",
+            "/components/container.js",
+            "/components/tables/table.js",
+            "/components/tables/tableFiltrados/janelaConfiguracao.js",
+            "/components/tables/tableFiltrados/linkTabelaFiltro.js",
+            "/components/tables/tableFiltrados/tableFiltrados.js",
+            "/components/tables/tablePrazos/tablePrazos.js",
             "main.js"
          ],
          "css": [

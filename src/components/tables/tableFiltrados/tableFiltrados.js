@@ -28,6 +28,7 @@ class TableFiltrados extends Table{
     filtrarProcessos(){
         var anchors = Array.from(document.querySelectorAll(`[onmouseover*="'${config.marcadorSelecionado.titulo}'"`))
         var processos = anchors.map(element => element.parentElement.parentElement)
+        processos = processos.filter(element => !element.classList.contains("ComPrazo"))
         processos.forEach(element => {
             this.root.firstChild.appendChild(element)
         })
